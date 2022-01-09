@@ -1,11 +1,16 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Web-Apps mit HTML5 und JavaScript</h1>
 
-Welcome to your new app.
+<h2>Studienarbeit zum Thema WebAssembly mit C#</h2>
 
-<SurveyPrompt Title="Do you want to see the Code Repository?" />
-<Counter IncrementAmount="2" />
+Diese GitHub Page wurde als Blazor WebAssembly-App zu Demonstrationszwecken erstellt.
+Der Sourcode besteht aus C#-, html- und razor-Quelldateien, die nach der Kompilierung als .NET Assemblies vorliegen.
+Beim Webseitenaufruf lädt eine einzige html-Seite eine JavaScript-Bibliothek, welche das kompilierte WebAssambly in der .NET Runtime Umgebung des Browsers ausführt.JavaScript
+
+<@SurveyPrompt Title="Interesse am Code Repository?" />
 <br>
 <br>
-<Counter IncrementAmount="10" />
+Demonstration eines Zähler-Objekts mit Parameterübergabe
+<@Counter IncrementAmount="2" />
+
