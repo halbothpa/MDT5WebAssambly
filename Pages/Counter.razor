@@ -15,18 +15,20 @@
         currentCount = currentCount + IncrementAmount;
 
     }
-    private void StartThread()
+    async void StartThread()
     {
-
-        new Thread(() =>
-        {
-
-
-            for (int i = 0; i < 5; i++)
-            {
-                IncrementCount();
-                Thread.Sleep(500);
-            }
-        }).Start();
+     await   DoLongRunningTask();
     }
+    async Task DoLongRunningTask()
+	{
+		System.Diagnostics.Debug.WriteLine("Starting long running task");
+		DateTime endTime = DateTime.UtcNow.AddSeconds(10);
+		while (DateTime.UtcNow < endTime)
+		{
+			await Task.Delay(100);
+            IncrementCount();
+		}
+		System.Diagnostics.Debug.WriteLine("Finished long running task");
+	}
+    
 }
