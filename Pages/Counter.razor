@@ -12,7 +12,7 @@
     public int IncrementAmount { get; set; } = 1;
     private void IncrementCount()
     {
-        currentCount *= (currentCount+IncrementAmount);
+        currentCount = (currentCount+currentCount) +IncrementAmount);
 
     }
 }
