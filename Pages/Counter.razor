@@ -4,23 +4,36 @@
 
 <p>Current count: @currentCount</p>
 
-    <div>
-    <label for="iAmount">Increment Amount:</label> 
+<div>
+    <label for="iAmount">Increment Amount:</label>
     <input id="iAmount" @bind="incrementAmount" placeholder="@incrementAmount" />
-    </div>
-    <div>
+</div>
+<div>
     <label for="tDuration">Task Duration (s):</label>
     <input id="tDuration" @bind="taskDurationInput" placeholder="@taskDurationInput" />
-    </div>
-    <div>
+</div>
+<div>
     <label for="tDelay">Task Loop Delay (ms):</label>
     <input id="tDelay" @bind="taskLoopDelayInput" placeholder="@taskLoopDelayInput" />
-    </div>
+</div>
 
 <br>
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-<button class="btn btn-secondary" @onclick="StartTask">Run Task</button>
+<span>
+<button id="click_me" class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+</span>
+<span>
+@if (!isTaskRunning)
+{
+    <button id="run_task" class="btn btn-secondary" @onclick="StartTask">Run Task</button>
+}
+else
+{
+    <button id="cancel_task" class="btn btn-secondary" @onclick="CancelTask">Cancel</button>
+}
+</span>
 @code {
+    private bool isTaskRunning = false;
+    private bool cancelTask = false;
     private int currentCount = 0;
     private int incrementAmount = 1;
     public int taskDurationInput = 10;
@@ -43,22 +56,45 @@
         currentCount = currentCount + IncrementAmount;
 
     }
-    async void StartTask()
+    public async void StartTask()
     {
-        await DoLongRunningTask();
+        if (!isTaskRunning)
+            await DoLongRunningTask();
+
+    }
+    public void CancelTask()
+    {
+        if (isTaskRunning)
+        {
+            cancelTask = true;
+
+        isTaskRunning = false;
+        }
     }
     async Task DoLongRunningTask()
     {
+        isTaskRunning = true;
         await Task.Yield();
         System.Diagnostics.Debug.WriteLine("Starting long running task");
         DateTime endTime = DateTime.UtcNow.AddSeconds(taskDurationInput);
-        while (DateTime.UtcNow < endTime)
+        while (DateTime.UtcNow < endTime && !cancelTask)
         {
             StateHasChanged();
             await Task.Delay(taskLoopDelayInput);
             currentCount = currentCount + IncrementAmount;
         }
-        System.Diagnostics.Debug.WriteLine("Finished long running task");
+        if (cancelTask)
+        {
+            System.Diagnostics.Debug.WriteLine("Task cancled!");
+            cancelTask = false;
+            StateHasChanged();
+        }
+        else
+        {
+            System.Diagnostics.Debug.WriteLine("Finished long running task");
+        }
+        isTaskRunning = false;
     }
+
 
 }

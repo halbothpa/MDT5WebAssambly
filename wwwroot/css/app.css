@@ -13,9 +13,11 @@ div {
   }
   input
   {
-    padding: 5px 10px;
-    
+    padding: 5px 10px;   
   }
+  span .btn-secondary .btn-primary{
+    word-spacing:10px;
+}
 a, .btn-link {
     color: #0366d6;
 }
