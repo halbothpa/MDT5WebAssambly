@@ -58,9 +58,12 @@ else
     }
     public async void StartTask()
     {
-        if (!isTaskRunning)
+        if (!isTaskRunning){
             await DoLongRunningTask();
-
+        
+           // isTaskRunning = false;
+        }
+         
     }
     public void CancelTask()
     {
@@ -88,13 +91,15 @@ else
         {
             System.Diagnostics.Debug.WriteLine("Task cancled!");
             cancelTask = false;
-            StateHasChanged();
+           
         }
         else
         {
             System.Diagnostics.Debug.WriteLine("Finished long running task");
         }
+        
         isTaskRunning = false;
+        StateHasChanged();
     }
 
 
