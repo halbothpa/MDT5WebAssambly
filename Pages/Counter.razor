@@ -79,9 +79,10 @@ else
         DateTime endTime = DateTime.UtcNow.AddSeconds(taskDurationInput);
         while (DateTime.UtcNow < endTime && !cancelTask)
         {
-            StateHasChanged();
+            
             await Task.Delay(taskLoopDelayInput);
             currentCount = currentCount + IncrementAmount;
+            StateHasChanged();
         }
         if (cancelTask)
         {
