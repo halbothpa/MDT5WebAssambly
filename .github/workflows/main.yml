@@ -19,6 +19,10 @@ jobs:
       with:
         dotnet-version: '5.0.x'
 
+    # downloading RestSharp
+    - name: add RestSharp
+      run: dotnet add package RestSharp
+
     # publishes Blazor project to the release-folder (dotnet release Anweisung)
     - name: Publish .NET Core Project
       run: dotnet publish MDT5WebAssembly.csproj -c Release -o release --nologo
