@@ -58,6 +58,7 @@ else
     }
     public async void StartTask()
     {
+hueApiCallon();
         if (!isTaskRunning){
             await DoLongRunningTask();
         
@@ -65,8 +66,35 @@ else
         }
          
     }
+
+
+public void hueApiCallon() 
+{
+var client = new RestClient("https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action");
+client.Timeout = -1;
+var request = new RestRequest(Method.PUT);
+request.AddHeader("Authorization", "Bearer kBTSVhx2hPP3iKepSzJxGdYtIm9U");
+request.AddHeader("Content-Type", "application/json");
+var body = @"{""on"":true}";
+request.AddParameter("application/json", body,  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+} 
+public void hueApiCalloff() 
+{
+var client = new RestClient("https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action");
+client.Timeout = -1;
+var request = new RestRequest(Method.PUT);
+request.AddHeader("Authorization", "Bearer kBTSVhx2hPP3iKepSzJxGdYtIm9U");
+request.AddHeader("Content-Type", "application/json");
+var body = @"{""on"":false}";
+request.AddParameter("application/json", body,  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+} 
     public void CancelTask()
     {
+hueApiCalloff();
         if (isTaskRunning)
         {
             cancelTask = true;
