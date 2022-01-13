@@ -1,7 +1,12 @@
 @page "/counter"
-@using System; 
-@using System.IO; 
-@using System.Net;
+@using System.Net.Http
+@using System.Net.Http.Json
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Converters
+@using Newtonsoft.Json.Serialization
+@using System.Threading.Tasks
+@using System.Net.Http.Headers
+@inject HttpClient HttpClient
 <h1 style="font-size:30px;">Counter</h1>
 
 <p>Current count: @currentCount</p>
@@ -21,18 +26,21 @@
 
 <br>
 <span>
-<button id="click_me" class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+    <button id="click_me" class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 </span>
 <span>
-@if (!isTaskRunning)
-{
-    <button id="run_task" class="btn btn-secondary" @onclick="StartTask">Run Task</button>
-}
-else
-{
-    <button id="cancel_task" class="btn btn-secondary" @onclick="CancelTask">Cancel</button>
-}
+    @if (!isTaskRunning)
+    {
+        <button id="run_task" class="btn btn-secondary" @onclick="StartTask">Run Task</button>
+    }
+    else
+    {
+        <button id="cancel_task" class="btn btn-secondary" @onclick="CancelTask">Cancel</button>
+    }
 </span>
+
+
+
 @code {
     private bool isTaskRunning = false;
     private bool cancelTask = false;
@@ -52,91 +60,151 @@ else
             incrementAmount = value;
         }
     }
-    private void IncrementCount()
+    private async void IncrementCount()
     {
-hueApiCalloff();
+       await hueCommand(1);
         currentCount = currentCount + IncrementAmount;
 
     }
     public async void StartTask()
     {
-hueApiCallon();
-        if (!isTaskRunning){
+      await  hueCommand(0);
+        if (!isTaskRunning)
+        {
             await DoLongRunningTask();
-        
-           // isTaskRunning = false;
+
+            // isTaskRunning = false;
         }
-         
+
     }
 
 
-public void hueApiCallon() 
-{
-hueCommand(1);
-} 
-public void hueApiCalloff() 
-{
-hueCommand(0);
-} 
-
-	public void hueCommand(int turn_on = -1)
-	{
-
-		var data = "{\"alert\":\"select\"}";
-		if (turn_on == 1)
-		{
-			data = "{\"on\":true}";
-		}
-
-		else if (turn_on == 0)
-		{
-			data = "{\"on\":false}";
-		}
-	
-
-		var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
-
-		var httpRequest = (HttpWebRequest)WebRequest.Create(url);
-		httpRequest.Method = "PUT";
-
-		httpRequest.Headers["Authorization"] = "Bearer kBTSVhx2hPP3iKepSzJxGdYtIm9U";
-		httpRequest.ContentType = "application/json";
+    public async void hueApiCallon()
+    {
+     await   hueCommand(1);
+    }
+    public async void hueApiCalloff()
+    {
+     await   hueCommand(0);
+    }
 
 
+ /* public String article;
+int turn_on = 1;
+     protected override async Task OnInitializedAsync()
+    {
+            String data = "{\"alert\":\"select\"}";
+            var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
+         var tempBoolBody = new { on = "true"};
+    
+           if (turn_on == 1)
+        {
+            data = "{\"on\":true}";
+            tempBoolBody = new { on = "true"};
+        }
+        else if (turn_on == 0)
+        {
+            data = "{\"on\":false}";
+           tempBoolBody = new { on = "false"};
+        }
+  
+        
+        
 
-		using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
-		{
-			streamWriter.Write(data);
-		}
+        // create request object
+        var request = new HttpRequestMessage(HttpMethod.Put, url);
+        // add authorization header
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "kBTSVhx2hPP3iKepSzJxGdYtIm9U");
+        // set request body   
+       // var postBody = new {on = true};
+        request.Content = new StringContent((data),Encoding.UTF8, "application/json");
+    
 
-		var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-		using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-		{
-			var result = streamReader.ReadToEnd();
-		}
-		return;
-	}
 
+
+        // send request
+        using var response = await HttpClient.PutAsync(url,request.Content);
+
+        // convert response data to Article object
+      var  res = await response.Content.ReadFromJsonAsync<JsonElement>();
+          article = res.GetRawText();
+    }
+
+*/
+public async Task hueCommand(int turn_on = -1)
+    {
+        await Task.Yield();
+
+          StateHasChanged();
+    }
+
+   /* public async Task hueCommand(int turn_on = -1)
+    {
+        await Task.Yield();
+
+          StateHasChanged();
+        var data = "{\"alert\":\"select\"}";
+        if (turn_on == 1)
+        {
+            data = "{\"on\":true}";
+        }
+
+        else if (turn_on == 0)
+        {
+            data = "{\"on\":false}";
+        }
+
+
+        var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
+        await Http.
+        HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(url);
+        httpRequest.Method = "PUT";
+
+        httpRequest.Headers["Authorization"] = "Bearer kBTSVhx2hPP3iKepSzJxGdYtIm9U";
+        httpRequest.ContentType = "application/json";
+
+        await Task.Yield();
+        
+          StateHasChanged();
+
+        using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+        {
+            streamWriter.Write(data);
+        }
+
+        var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+        }
+         await Task.Yield();
+        
+          StateHasChanged();
+          
+        return;
+    }
+*/
 
     public void CancelTask()
     {
-hueCommand();
+    
         if (isTaskRunning)
         {
             cancelTask = true;
 
-        isTaskRunning = false;
+            isTaskRunning = false;
         }
     }
     async Task DoLongRunningTask()
     {
+        
         isTaskRunning = true;
         await Task.Yield();
         System.Diagnostics.Debug.WriteLine("Starting long running task");
         DateTime endTime = DateTime.UtcNow.AddSeconds(taskDurationInput);
         while (DateTime.UtcNow < endTime && !cancelTask)
         {
-            
+
             await Task.Delay(taskLoopDelayInput);
             currentCount = currentCount + IncrementAmount;
             StateHasChanged();
@@ -145,13 +213,13 @@ hueCommand();
         {
             System.Diagnostics.Debug.WriteLine("Task cancled!");
             cancelTask = false;
-           
+
         }
         else
         {
             System.Diagnostics.Debug.WriteLine("Finished long running task");
         }
-        
+
         isTaskRunning = false;
         StateHasChanged();
     }
