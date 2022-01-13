@@ -82,15 +82,15 @@ hueCommand(false);
 	public void hueCommand(bool turn_on)
 	{
 
-		var data = "{"alert":"select"}";
+		var data = "{\"alert\":\"select\"}";
 		if (r.ToLowerInvariant().Trim() == "on" || r.ToLowerInvariant().Trim() == "true")
 		{
-			var data = "{"on":true}";
+			var data = "{\"on\":true}";
 		}
 
 		else if (r.ToLowerInvariant().Trim() == "off" || r.ToLowerInvariant().Trim() == "false")
 		{
-			var data = "{"on":false}";
+			var data = "{\"on\":false}";
 		}
 		else
 			return;
