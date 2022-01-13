@@ -72,28 +72,27 @@ hueApiCallon();
 
 public void hueApiCallon() 
 {
-hueCommand(true);
+hueCommand(1);
 } 
 public void hueApiCalloff() 
 {
-hueCommand(false);
+hueCommand(0);
 } 
 
-	public void hueCommand(bool turn_on)
+	public void hueCommand(int turn_on = -1)
 	{
 
 		var data = "{\"alert\":\"select\"}";
-		if (r.ToLowerInvariant().Trim() == "on" || r.ToLowerInvariant().Trim() == "true")
+		if (turn_on == 1)
 		{
-			var data = "{\"on\":true}";
+			data = "{\"on\":true}";
 		}
 
-		else if (r.ToLowerInvariant().Trim() == "off" || r.ToLowerInvariant().Trim() == "false")
+		else if (turn_on == 0)
 		{
-			var data = "{\"on\":false}";
+			data = "{\"on\":false}";
 		}
-		else
-			return;
+	
 
 		var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
 
@@ -121,7 +120,7 @@ hueCommand(false);
 
     public void CancelTask()
     {
-hueApiCallon();
+hueCommand();
         if (isTaskRunning)
         {
             cancelTask = true;
