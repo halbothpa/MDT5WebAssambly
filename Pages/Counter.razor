@@ -17,18 +17,20 @@
     }
     async void StartThread()
     {
-     await   DoLongRunningTask();
+        await DoLongRunningTask();
     }
     async Task DoLongRunningTask()
-	{
-		System.Diagnostics.Debug.WriteLine("Starting long running task");
-		DateTime endTime = DateTime.UtcNow.AddSeconds(10);
-		while (DateTime.UtcNow < endTime)
-		{
-			await Task.Delay(100);
-            IncrementCount();
-		}
-		System.Diagnostics.Debug.WriteLine("Finished long running task");
-	}
-    
+    {
+        await Task.Yield();
+        System.Diagnostics.Debug.WriteLine("Starting long running task");
+        DateTime endTime = DateTime.UtcNow.AddSeconds(10);
+        while (DateTime.UtcNow < endTime)
+        {
+            StateHasChanged();
+            await Task.Delay(100);
+            currentCount = currentCount + IncrementAmount;
+        }
+        System.Diagnostics.Debug.WriteLine("Finished long running task");
+    }
+
 }
