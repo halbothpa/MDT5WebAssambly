@@ -13,19 +13,20 @@
     private void IncrementCount()
     {
         currentCount = currentCount + IncrementAmount;
-   
+
     }
-     private void StartThread()
+    private void StartThread()
     {
-       
+
         new Thread(() =>
-       {
-         
-       
-           for(int i = 0; i< 5; i++){
-           currentCount += 1;
-          Thread.Sleep(500);
-           }
-       }).Start();
+        {
+
+
+            for (int i = 0; i < 5; i++)
+            {
+                IncrementCount();
+                Thread.Sleep(500);
+            }
+        }).Start();
     }
 }
