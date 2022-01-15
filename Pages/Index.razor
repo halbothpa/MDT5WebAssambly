@@ -10,5 +10,11 @@ Beim Webseitenaufruf lädt eine einzige html-Seite eine JavaScript-Bibliothek, w
 <SurveyPrompt Title="Interesse am Quellcode?" />
 <br/>
 <strong>Demonstration eines Zähler-Objekts mit Parameterübergabe:</strong>
-<Counter IncrementAmount="2" />
+<input @bind="incrementInput" placeholder="@incrementInput" />
+<Counter IncrementAmount="@incrementInput" />
 <br/>
+@code {
+    private int incrementInput = 1;
+
+    
+}
