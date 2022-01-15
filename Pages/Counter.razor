@@ -8,11 +8,13 @@
 <button class="btn btn-primary" @onclick="StartThread">Thread</button>
 @code {
     private int currentCount = 0;
-    private int incrementInput = 1;
+    public int incrementInput = 1;
     [Parameter]
-    public int IncrementAmount { get; set; } = incrementInput;
+    public int IncrementAmount { get; set; } = 1;
     private void IncrementCount()
     {
+if(IncrementAmount != incrementInput) 
+IncrementAmount=incrementInput;
         currentCount = currentCount + IncrementAmount;
 
     }
