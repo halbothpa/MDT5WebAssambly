@@ -3,13 +3,14 @@
 <h1>Counter</h1>
 
 <p>Current count: @currentCount</p>
-
+<input @bind="incrementInput" placeholder="@incrementInput">Increment Amount</input>
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 <button class="btn btn-primary" @onclick="StartThread">Thread</button>
 @code {
     private int currentCount = 0;
+    private int incrementInput = 1;
     [Parameter]
-    public int IncrementAmount { get; set; } = 1;
+    public int IncrementAmount { get; set; } = incrementInput;
     private void IncrementCount()
     {
         currentCount = currentCount + IncrementAmount;
