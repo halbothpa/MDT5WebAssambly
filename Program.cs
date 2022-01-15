@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace MDT5WebAssambly
+namespace MDT5WebAssembly
 {
     public class Program
     {
