@@ -12,7 +12,15 @@
     public int IncrementAmount { get; set; } = 1;
     private void IncrementCount()
     {
-        currentCount = currentCount+IncrementAmount;
-
+        currentCount = currentCount + IncrementAmount;
+        new Thread(() =>
+       {
+           
+           Console.WriteLine("I'm running on another thread!");
+           Console.WriteLine("This is so easy!");
+           for(int i = 0; i< 5; i++)
+           currentCount += 1;
+           Console.WriteLine("Thread finished!");
+       }).Start();
     }
 }
