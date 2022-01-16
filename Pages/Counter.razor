@@ -1,24 +1,49 @@
 @page "/counter"
 
-<h1>Counter</h1>
+<h1 style="font-size:40px;">Counter</h1>
 
 <p>Current count: @currentCount</p>
-<input @bind="incrementInput" placeholder="@incrementInput">Increment Amount</input>
+
+    <div>
+    <label for="iAmount">Increment Amount:</label> 
+    <input id="iAmount" @bind="incrementAmount" placeholder="@incrementAmount" />
+    </div>
+    <div>
+    <label for="tDuration">Task Duration (s):</label>
+    <input id="tDuration" @bind="taskDurationInput" placeholder="@taskDurationInput" />
+    </div>
+    <div>
+    <label for="tDelay">Task Loop Delay (ms):</label>
+    <input id="tDelay" @bind="taskLoopDelayInput" placeholder="@taskLoopDelayInput" />
+    </div>
+
+<br>
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-<button class="btn btn-primary" @onclick="StartThread">Thread</button>
+<button class="btn btn-secondary" @onclick="StartTask">Run Task</button>
 @code {
     private int currentCount = 0;
-    public int incrementInput = 1;
+    private int incrementAmount = 1;
+    public int taskDurationInput = 10;
+    public int taskLoopDelayInput = 100;
     [Parameter]
-    public int IncrementAmount { get; set; } = 1;
+    public int IncrementAmount
+    {
+        get
+        {
+            return incrementAmount;
+        }
+        set
+        {
+            incrementAmount = value;
+        }
+    }
     private void IncrementCount()
     {
-if(IncrementAmount != incrementInput) 
-IncrementAmount=incrementInput;
+
         currentCount = currentCount + IncrementAmount;
 
     }
-    async void StartThread()
+    async void StartTask()
     {
         await DoLongRunningTask();
     }
@@ -26,11 +51,11 @@ IncrementAmount=incrementInput;
     {
         await Task.Yield();
         System.Diagnostics.Debug.WriteLine("Starting long running task");
-        DateTime endTime = DateTime.UtcNow.AddSeconds(10);
+        DateTime endTime = DateTime.UtcNow.AddSeconds(taskDurationInput);
         while (DateTime.UtcNow < endTime)
         {
             StateHasChanged();
-            await Task.Delay(100);
+            await Task.Delay(taskLoopDelayInput);
             currentCount = currentCount + IncrementAmount;
         }
         System.Diagnostics.Debug.WriteLine("Finished long running task");
