@@ -52,7 +52,7 @@ else
     }
     private void IncrementCount()
     {
-
+hueApiCalloff();
         currentCount = currentCount + IncrementAmount;
 
     }
@@ -94,7 +94,7 @@ System.Diagnostics.Debug.WriteLine(response.Content);
 } 
     public void CancelTask()
     {
-hueApiCalloff();
+hueApiCallon();
         if (isTaskRunning)
         {
             cancelTask = true;
