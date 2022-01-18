@@ -78,7 +78,7 @@ request.AddHeader("Content-Type", "application/json");
 var body = @"{""on"":true}";
 request.AddParameter("application/json", body,  ParameterType.RequestBody);
 IRestResponse response = client.Execute(request);
-Console.WriteLine(response.Content);
+System.Diagnostics.Debug.WriteLine(response.Content);
 } 
 public void hueApiCalloff() 
 {
@@ -90,7 +90,7 @@ request.AddHeader("Content-Type", "application/json");
 var body = @"{""on"":false}";
 request.AddParameter("application/json", body,  ParameterType.RequestBody);
 IRestResponse response = client.Execute(request);
-Console.WriteLine(response.Content);
+System.Diagnostics.Debug.WriteLine(response.Content);
 } 
     public void CancelTask()
     {
