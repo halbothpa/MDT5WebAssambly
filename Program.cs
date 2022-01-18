@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-Pusing RestSharp;
+using RestSharp;
 using RestSharp.Authenticators;
 namespace MDT5WebAssembly
 {
