@@ -72,12 +72,53 @@ hueApiCallon();
 
 public void hueApiCallon() 
 {
-
+hueCommand(true);
 } 
 public void hueApiCalloff() 
 {
-
+hueCommand(false);
 } 
+
+	public void hueCommand(bool turn_on)
+	{
+
+		var data = "{"alert":"select"}";
+		if (r.ToLowerInvariant().Trim() == "on" || r.ToLowerInvariant().Trim() == "true")
+		{
+			var data = "{"on":true}";
+		}
+
+		else if (r.ToLowerInvariant().Trim() == "off" || r.ToLowerInvariant().Trim() == "false")
+		{
+			var data = "{"on":false}";
+		}
+		else
+			return;
+
+		var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
+
+		var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+		httpRequest.Method = "PUT";
+
+		httpRequest.Headers["Authorization"] = "Bearer kBTSVhx2hPP3iKepSzJxGdYtIm9U";
+		httpRequest.ContentType = "application/json";
+
+
+
+		using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+		{
+			streamWriter.Write(data);
+		}
+
+		var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+		using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+		{
+			var result = streamReader.ReadToEnd();
+		}
+		return;
+	}
+
+
     public void CancelTask()
     {
 hueApiCallon();
