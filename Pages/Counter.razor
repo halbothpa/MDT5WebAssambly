@@ -89,48 +89,6 @@
     }
 
 
- /* public String article;
-int turn_on = 1;
-     protected override async Task OnInitializedAsync()
-    {
-            String data = "{\"alert\":\"select\"}";
-            var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
-         var tempBoolBody = new { on = "true"};
-    
-           if (turn_on == 1)
-        {
-            data = "{\"on\":true}";
-            tempBoolBody = new { on = "true"};
-        }
-        else if (turn_on == 0)
-        {
-            data = "{\"on\":false}";
-           tempBoolBody = new { on = "false"};
-        }
-  
-        
-        
-
-        // create request object
-        var request = new HttpRequestMessage(HttpMethod.Put, url);
-        // add authorization header
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "kBTSVhx2hPP3iKepSzJxGdYtIm9U");
-        // set request body   
-       // var postBody = new {on = true};
-        request.Content = new StringContent((data),Encoding.UTF8, "application/json");
-    
-
-
-
-        // send request
-        using var response = await HttpClient.PutAsync(url,request.Content);
-
-        // convert response data to Article object
-      var  res = await response.Content.ReadFromJsonAsync<JsonElement>();
-          article = res.GetRawText();
-    }
-
-*/
 public async Task hueCommand(int turn_on = -1)
     {
         await Task.Yield();
@@ -138,52 +96,7 @@ public async Task hueCommand(int turn_on = -1)
           StateHasChanged();
     }
 
-   /* public async Task hueCommand(int turn_on = -1)
-    {
-        await Task.Yield();
-
-          StateHasChanged();
-        var data = "{\"alert\":\"select\"}";
-        if (turn_on == 1)
-        {
-            data = "{\"on\":true}";
-        }
-
-        else if (turn_on == 0)
-        {
-            data = "{\"on\":false}";
-        }
-
-
-        var url = "https://api.meethue.com/bridge/O8y40G2KGLC9Rqo2CcQUW0yrNd8PmFtAX4cgAuy2/groups/1/action";
-        await Http.
-        HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(url);
-        httpRequest.Method = "PUT";
-
-        httpRequest.Headers["Authorization"] = "Bearer kBTSVhx2hPP3iKepSzJxGdYtIm9U";
-        httpRequest.ContentType = "application/json";
-
-        await Task.Yield();
-        
-          StateHasChanged();
-
-        using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
-        {
-            streamWriter.Write(data);
-        }
-
-        var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        {
-            var result = streamReader.ReadToEnd();
-        }
-         await Task.Yield();
-        
-          StateHasChanged();
-          
-        return;
-    }
-*/
+   
 
     public void CancelTask()
     {
