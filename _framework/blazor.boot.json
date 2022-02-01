@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "MDT5WebAssembly.dll": "sha256-KC2BnzB1xZfOXS3mf6M7YLswOumR3aiUaReVML49204=",
+      "MDT5WebAssembly.dll": "sha256-6\/nxTou+Uq5UcxH4j2LNv60jUcaSiDYmumwIE+6jzL4=",
       "Microsoft.AspNetCore.Components.dll": "sha256-eI8eTgcsXXQg6sKBe2QTdYUj4ZzrDZMLrXtMwEfhAtg=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-qdPUDON7SGALrOQaLUgb5RuPIVy\/KZJqKDox127i\/ns=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-2fbR6RpUxEMnL89Bp4BedWtQJQRpzWAu87gh1UjPAWk=",
